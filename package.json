@@ -1,6 +1,6 @@
 {
   "name": "ftech-vue",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "CLI tool for creating Vue projects with Quasar framework templates",
   "author": "Danh Nguyen <danh121097@gmail.com>",
   "license": "MIT",
