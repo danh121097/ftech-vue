@@ -1,0 +1,79 @@
+{
+  "name": "ftech-vue",
+  "version": "0.1.0",
+  "description": "CLI tool for creating Vue projects with Quasar framework templates",
+  "author": "Danh Nguyen <danh121097@gmail.com>",
+  "license": "MIT",
+  "bin": {
+    "ftech-vue": "./cli/index.js"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit",
+    "create": "node cli/create.js"
+  },
+  "dependencies": {
+    "commander": "^13.1.0",
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "chalk": "^4.1.2",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "fs-extra": "^10.1.0",
+    "inquirer": "^8.2.5"
+  },
+  "files": [
+    "base/**",
+    "micro-route/**",
+    "cli/**"
+  ],
+  "keywords": [
+    "vue",
+    "quasar",
+    "cli",
+    "template",
+    "vue-cli",
+    "scaffold"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danh121097/ftech-vue.git"
+  },
+  "homepage": "https://github.com/danh121097/ftech-vue#readme",
+  "bugs": {
+    "url": "https://github.com/danh121097/ftech-vue/issues"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

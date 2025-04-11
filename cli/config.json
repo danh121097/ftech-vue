@@ -1,0 +1,14 @@
+{
+  "templates": [
+    {
+      "name": "base",
+      "description": "Standard Vue project with Quasar framework",
+      "path": "../base"
+    },
+    {
+      "name": "micro-route",
+      "description": "Vue project with micro-route architecture + Quasar framework",
+      "path": "../micro-route"
+    }
+  ]
+}
