@@ -26,8 +26,10 @@ function isYarnAvailable() {
 
 /**
  * CLI tool to create a new project based on the selected template
+ * @param {string} [providedProjectName] - Project name from CLI arguments
+ * @param {Object} [options] - CLI options
  */
-async function main() {
+async function main(providedProjectName, options = {}) {
   console.log(chalk.blue('=================================='));
   console.log(chalk.blue('   Vue Project Creator CLI Tool'));
   console.log(chalk.blue('=================================='));
@@ -35,6 +37,7 @@ async function main() {
 
   try {
     const hasYarn = isYarnAvailable();
+    const questions = [];
 
     // Get template choices from config
     const templateChoices = config.templates.map((template) => ({
@@ -42,15 +45,19 @@ async function main() {
       value: template.name
     }));
 
-    // Ask user for template type, project name, and package manager
-    const answers = await inquirer.prompt([
-      {
+    // Only ask for template if not provided via options
+    if (!options.template) {
+      questions.push({
         type: 'list',
         name: 'template',
         message: 'Select project template:',
         choices: templateChoices
-      },
-      {
+      });
+    }
+
+    // Only ask for project name if not provided as argument
+    if (!providedProjectName) {
+      questions.push({
         type: 'input',
         name: 'projectName',
         message: 'Enter folder name for your new project:',
@@ -60,17 +67,40 @@ async function main() {
           }
           return true;
         }
-      },
-      {
+      });
+    }
+
+    // Only ask for package manager if not provided via options
+    if (!options.packageManager) {
+      questions.push({
         type: 'list',
         name: 'packageManager',
         message: 'Select package manager:',
         choices: hasYarn ? ['npm', 'yarn'] : ['npm'],
         default: 'npm'
-      }
-    ]);
+      });
+    }
 
-    const { template, projectName, packageManager } = answers;
+    // If we have questions, prompt the user
+    const answers =
+      questions.length > 0 ? await inquirer.prompt(questions) : {};
+
+    // Combine CLI arguments with prompt answers
+    const template = options.template || answers.template;
+    const projectName = providedProjectName || answers.projectName;
+    const packageManager =
+      options.packageManager || answers.packageManager || 'npm';
+
+    // Validate we have all required values
+    if (!template && !answers.template) {
+      console.error(chalk.red('Template selection is required.'));
+      process.exit(1);
+    }
+
+    if (!projectName) {
+      console.error(chalk.red('Project name is required.'));
+      process.exit(1);
+    }
 
     // Get template config from the selected template
     const templateConfig = config.templates.find((t) => t.name === template);
@@ -120,24 +150,7 @@ async function main() {
     );
     await fs.copy(templatePath, targetPath);
 
-    // Update package.json in the new project
-    const pkgJsonPath = path.join(targetPath, 'package.json');
-    if (fs.existsSync(pkgJsonPath)) {
-      const pkgJson = await fs.readJson(pkgJsonPath);
-      pkgJson.name = projectName;
-
-      // Add babel dependencies if needed
-      if (!pkgJson.dependencies) pkgJson.dependencies = {};
-      if (!pkgJson.devDependencies) pkgJson.devDependencies = {};
-
-      // Ensure babel dependencies are included
-      pkgJson.devDependencies['@babel/core'] = '^7.20.0';
-      pkgJson.devDependencies['@babel/preset-env'] = '^7.20.0';
-      pkgJson.devDependencies['@babel/plugin-proposal-class-properties'] =
-        '^7.18.6';
-
-      await fs.writeJson(pkgJsonPath, pkgJson, { spaces: 2 });
-    }
+    // The package.json update section has been removed
 
     // Determine installation command based on package manager
     const installCmd = packageManager === 'yarn' ? 'yarn' : 'npm install';
@@ -188,5 +201,10 @@ async function main() {
   }
 }
 
-// Run the CLI
-main();
+// Export the module function so it can be called with arguments
+module.exports = main;
+
+// Run directly if this file is the entry point
+if (require.main === module) {
+  main();
+}

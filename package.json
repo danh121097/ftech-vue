@@ -7,15 +7,21 @@
   "bin": {
     "ftech-vue": "./cli/index.js"
   },
+  "type": "commonjs",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "create": "node cli/create.js"
+    "create": "node cli/create.js",
+    "test": "echo \"No test specified\"",
+    "prepublishOnly": "npm test"
   },
   "dependencies": {
-    "chalk": "4.1.2",
+    "chalk": "^4.1.2",
     "commander": "^13.1.0",
     "core-js": "^3.8.3",
     "fs-extra": "^10.1.0",
@@ -36,9 +42,11 @@
     "eslint-plugin-vue": "^8.0.3"
   },
   "files": [
+    "cli/**",
     "base/**",
     "micro-route/**",
-    "cli/**"
+    "README.md",
+    "LICENSE"
   ],
   "keywords": [
     "vue",
@@ -46,11 +54,14 @@
     "cli",
     "template",
     "vue-cli",
-    "scaffold"
+    "scaffold",
+    "generator",
+    "boilerplate",
+    "starter"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/danh121097/ftech-vue.git"
+    "url": "git+https://github.com/danh121097/ftech-vue.git"
   },
   "homepage": "https://github.com/danh121097/ftech-vue#readme",
   "bugs": {

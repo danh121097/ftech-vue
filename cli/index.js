@@ -13,16 +13,27 @@ program
 
 // Add the create command
 program
-  .command('create')
+  .command('create [projectName]')
   .description('Create a new Vue project')
-  .action(() => {
-    // Run the create script
-    require('./create');
+  .option(
+    '-t, --template <template>',
+    'Specify template to use (base or micro-route)'
+  )
+  .option(
+    '-p, --package-manager <manager>',
+    'Specify package manager (npm or yarn)'
+  )
+  .action((projectName, options) => {
+    // Run the create script with arguments
+    require('./create')(projectName, options);
   });
 
 // Default command (for backward compatibility)
-if (process.argv.length === 2) {
-  require('./create');
+if (
+  process.argv.length === 2 ||
+  (process.argv.length === 3 && !process.argv[2].startsWith('-'))
+) {
+  require('./create')();
 } else {
   program.parse(process.argv);
 }
