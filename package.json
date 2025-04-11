@@ -1,6 +1,6 @@
 {
   "name": "ftech-vue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI tool for creating Vue projects with Quasar framework templates",
   "author": "Danh Nguyen <danh121097@gmail.com>",
   "license": "MIT",
@@ -15,8 +15,11 @@
     "create": "node cli/create.js"
   },
   "dependencies": {
+    "chalk": "4.1.2",
     "commander": "^13.1.0",
     "core-js": "^3.8.3",
+    "fs-extra": "^10.1.0",
+    "inquirer": "^8.2.5",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
@@ -29,11 +32,8 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "chalk": "^4.1.2",
     "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "fs-extra": "^10.1.0",
-    "inquirer": "^8.2.5"
+    "eslint-plugin-vue": "^8.0.3"
   },
   "files": [
     "base/**",
